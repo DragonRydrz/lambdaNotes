@@ -1,7 +1,7 @@
 {
   "expo": {
     "name": "lambdanotes",
-    "description": "This project is really great.",
+    "description": "A simple note app.  Passwords are secured, please do not save sensitive data in your notes.",
     "slug": "lambdanotes",
     "privacy": "public",
     "sdkVersion": "27.0.0",
@@ -9,10 +9,15 @@
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
+    "primaryColor": "#A0001D",
     "splash": {
-      "image": "./assets/splash.png",
+      "image": "./assets/icon.png",
       "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
+      "backgroundColor": "#000000"
+    },
+    "androidStatusBar": {
+      "barStyle": "dark-content",
+      "backgroundColor": "#FFFFFF"
     },
     "updates": {
       "fallbackToCacheTimeout": 0
