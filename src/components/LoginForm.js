@@ -15,6 +15,7 @@ class LoginForm extends Component {
     password: '',
     loading: false,
     loggedIn: false,
+    visible: true,
   };
 
   componentDidMount() {
@@ -26,6 +27,15 @@ class LoginForm extends Component {
     }
   }
   componentWillReceiveProps(props) {}
+
+  // deleteModal() {
+  //   if (this.state.modalOpen) {
+  //     return (
+
+  //     );
+  //   }
+  //   return null;
+  // }
 
   render() {
     // if (!this.props.loggedIn && props.loggedIn) {
@@ -40,7 +50,6 @@ class LoginForm extends Component {
     // }
     return (
       <SafeAreaView>
-        <DeleteModal />
         <Header headerText="LambdaNotes" />
         {this.loginOrNotes()}
       </SafeAreaView>

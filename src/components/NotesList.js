@@ -13,6 +13,7 @@ import {
 } from 'react-native';
 import { Button } from './common/Button';
 import { connect } from 'react-redux';
+import DeleteModal from './DeleteModal';
 import { deleteNote } from '../actions/deleteNote';
 import { signOut } from '../actions/signOut';
 import { Card, CardSection, Header } from './common';
@@ -20,7 +21,11 @@ import { Card, CardSection, Header } from './common';
 const width = Dimensions.get('window').width;
 
 class NotesList extends Component {
-  state = { modalVisible: false };
+  state = {
+    deleteVisible: false,
+    deleteConfirm: null,
+  };
+
   static navigationOptions = ({ navigation }) => {
     const { params = {} } = navigation.state;
     return {
@@ -40,50 +45,29 @@ class NotesList extends Component {
     this.props.navigation.navigate('AddNote');
   };
 
-  // deleteModal() {
-  //   console.log(width);
-  //   return (
-  //     <SafeAreaView>
-  //       <Modal
-  //         animationType="slide"
-  //         transparent={false}
-  //         visible={this.state.modalVisible}
-  //         onRequestClose={() => {
-  //           alert('Modal has been closed.');
-  //         }}
-  //       >
-  //         <View style={styles.modalContainerStyle}>
-  //           <View style={{ marginTop: 22 }}>
-  //             <View>
-  //               <Text>Hello World!</Text>
-
-  //               {/* <TouchableHighlight
-  //               onPress={() => {
-  //                 this.setState({ modalVisible: !this.state.modalVisible });
-  //               }}
-  //             > */}
-  //               <Button
-  //                 onPress={() => {
-  //                   this.setState({ modalVisible: !this.state.modalVisible });
-  //                 }}
-  //               >
-  //                 Hide Modal
-  //               </Button>
-  //               {/* </TouchableHighlight> */}
-  //             </View>
-  //           </View>
-  //         </View>
-  //       </Modal>
-  //     </SafeAreaView>
-  //   );
-  // }
+  deleteModal() {
+    if (this.state.deleteVisible) {
+      return (
+        <DeleteModal
+          visible={this.state.deleteVisible}
+          cancel={() =>
+            this.setState({ deleteConfirm: null, deleteVisible: false })
+          }
+          confirm={() => {
+            this.props.deleteNote(this.state.deleteConfirm);
+            this.setState({ deleteConfirm: null, deleteVisible: false });
+          }}
+        />
+      );
+    }
+    return null;
+  }
 
   render() {
-    console.log(this.props);
     const { titleStyle, bodyStyle } = styles;
     return (
       <SafeAreaView>
-        {/* {this.deleteModal()} */}
+        {this.deleteModal()}
         <Header headerText={this.props.username} />
         <FlatList
           style={{ height: '87%' }}
@@ -107,8 +91,10 @@ class NotesList extends Component {
                 </Button>
                 <Button
                   onPress={() => {
-                    // this.setState({ modalVisible: !this.state.modalVisible })
-                    this.props.deleteNote(item._id);
+                    this.setState({
+                      deleteConfirm: item._id,
+                      deleteVisible: true,
+                    });
                   }}
                 >
                   Delete

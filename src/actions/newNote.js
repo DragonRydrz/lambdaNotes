@@ -14,7 +14,6 @@ export const newNote = data => dispatch => {
           },
         })
         .then(response => {
-          console.log(response.data);
           dispatch({
             type: ADD_NEW_NOTE,
             payload: response.data.notes,

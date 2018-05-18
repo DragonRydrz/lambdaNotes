@@ -25,7 +25,6 @@ class EditNote extends Component {
     this.props.navigation.setParams({
       addNote: () => {
         this.props.editNote(this.state);
-        console.log(this.props.navigation);
         this.props.navigation.pop();
       },
     });

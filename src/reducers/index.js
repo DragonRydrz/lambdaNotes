@@ -35,20 +35,11 @@ export default (state = initState, action) => {
         notes: action.payload.notes,
       };
     case SIGN_OUT:
-      // const userNotesToSave = state.notes;
-      // const updatedUserData = { ...state.activeUser, notes: userNotesToSave };
-      // const newUsersToSave = state.users.filter(
-      //   user => user.username !== state.activeUser.username
-      // );
-      // newUsersToSave.push(updatedUserData);
-      // console.log(newUsersToSave);
-
       return {
         ...state,
         notes: [],
         activeUser: null,
         loggedIn: false,
-        // users: newUsersToSave,
       };
     case CREATE_USER:
       return {

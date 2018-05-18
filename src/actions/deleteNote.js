@@ -12,7 +12,6 @@ export const deleteNote = id => dispatch => {
         headers: { Authorization: `Bearer ${response}` },
       })
       .then(response => {
-        console.log(response.data);
         return dispatch({ type: DELETE_NOTE, payload: response.data.notes });
       })
       .catch(err => {
