@@ -48,12 +48,7 @@ class LoginForm extends Component {
     //   </View>
     // );
     // }
-    return (
-      <SafeAreaView>
-        <Header headerText="LambdaNotes" />
-        {this.loginOrNotes()}
-      </SafeAreaView>
-    );
+    return <SafeAreaView>{this.loginOrNotes()}</SafeAreaView>;
   }
 
   loginOrNotes() {

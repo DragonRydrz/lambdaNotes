@@ -1,18 +1,12 @@
-import { StackNavigator } from 'react-navigation';
+import { createStackNavigator, createSwitchNavigator } from 'react-navigation';
 import { connect } from 'react-redux';
 import LoginForm from './LoginForm';
 import NotesList from './NotesList';
 import EditNote from '../Screens/EditNote';
 import AddNote from '../Screens/AddNote';
 
-const RootStack = StackNavigator(
+const AppStack = createStackNavigator(
   {
-    Login: {
-      screen: LoginForm,
-      navigationOptions: {
-        title: 'Sign In',
-      },
-    },
     NotesList: {
       screen: NotesList,
       navigationOptions: {
@@ -21,6 +15,9 @@ const RootStack = StackNavigator(
     },
     NoteEdit: {
       screen: EditNote,
+      navigationOptions: {
+        title: 'Notes',
+      },
     },
     AddNote: {
       screen: AddNote,
@@ -30,8 +27,24 @@ const RootStack = StackNavigator(
     },
   },
   {
-    initialRouteName: 'Login',
+    initialRouteName: 'NotesList',
   }
 );
+const AuthStack = createStackNavigator({
+  Login: {
+    screen: LoginForm,
+    navigationOptions: {
+      title: 'Lambda Notes',
+    },
+  },
+});
 
-export default RootStack;
+export default createSwitchNavigator(
+  {
+    App: AppStack,
+    Auth: AuthStack,
+  },
+  {
+    initialRouteName: `Auth`,
+  }
+);

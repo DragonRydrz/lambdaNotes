@@ -11,6 +11,8 @@ import {
   Dimensions,
   StyleSheet,
 } from 'react-native';
+import AddNote from '../Screens/AddNote';
+
 import { Button } from './common/Button';
 import { connect } from 'react-redux';
 import DeleteModal from './DeleteModal';
@@ -32,15 +34,22 @@ class NotesList extends Component {
       headerRight: (
         <Button2 title={'Add Note'} onPress={() => params.addNote()} />
       ),
+      headerLeft: (
+        <Button2 title={'Sign Out'} onPress={() => params.signOut()} />
+      ),
     };
   };
 
   componentDidMount() {
     this.props.navigation.setParams({
       addNote: this.addNote,
+      signOut: this.signOut,
     });
   }
-
+  signOut = () => {
+    this.props.signOut();
+    this.props.navigation.navigate('Auth');
+  };
   addNote = () => {
     this.props.navigation.navigate('AddNote');
   };
