@@ -48,11 +48,36 @@ class LoginForm extends Component {
     //   </View>
     // );
     // }
-    return <SafeAreaView>{this.loginOrNotes()}</SafeAreaView>;
+    return (
+      <SafeAreaView>
+        <Card>
+          <CardSection>
+            <Input
+              placeholder="username"
+              label="Username"
+              value={this.state.username}
+              onChangeText={username => this.setState({ username })}
+            />
+          </CardSection>
+          <CardSection>
+            <Input
+              secureTextEntry
+              placeholder="password"
+              label="Password"
+              value={this.state.password}
+              onChangeText={password => this.setState({ password })}
+            />
+          </CardSection>
+
+          <Text style={styles.errorTextStyle}>{this.state.error}</Text>
+
+          <CardSection>{this.renderButtons()}</CardSection>
+        </Card>
+      </SafeAreaView>
+    );
   }
 
   loginOrNotes() {
-    // else {
     return (
       <Card>
         <CardSection>
@@ -78,7 +103,6 @@ class LoginForm extends Component {
         <CardSection>{this.renderButtons()}</CardSection>
       </Card>
     );
-    // }
   }
 
   renderButtons() {
