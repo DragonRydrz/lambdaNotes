@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { SafeAreaView, View, Text, Image } from 'react-native';
-import { Button } from './common';
+import { Button } from '../components/common';
 
 class LandingScreen extends Component {
   render() {

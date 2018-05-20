@@ -5,7 +5,7 @@ import { Provider } from 'react-redux';
 import { createStore, applyMiddleware } from 'redux';
 import thunk from 'redux-thunk';
 import reducers from './src/reducers';
-import RootStack from './src/components/RootStack';
+import RootStack from './src/navigation/RootStack';
 
 const App = () => {
   return (
@@ -14,7 +14,7 @@ const App = () => {
         <RootStack />
       </View>
     </Provider>
-  )
+  );
 };
 
 export default App;

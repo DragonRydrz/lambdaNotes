@@ -2,8 +2,15 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import axios from 'axios';
 import { AsyncStorage, Text, View, SafeAreaView } from 'react-native';
-import { Card, CardSection, Button, Input, Spinner, Header } from './common';
-import DeleteModal from './DeleteModal';
+import {
+  Card,
+  CardSection,
+  Button,
+  Input,
+  Spinner,
+  Header,
+} from '../components/common';
+import DeleteModal from '../components/DeleteModal';
 import NotesList from './NotesList';
 import { login } from '../actions/login';
 import { createUser } from '../actions/createUser';

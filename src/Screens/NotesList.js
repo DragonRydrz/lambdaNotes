@@ -13,12 +13,11 @@ import {
 } from 'react-native';
 import AddNote from '../Screens/AddNote';
 
-import { Button } from './common/Button';
 import { connect } from 'react-redux';
-import DeleteModal from './DeleteModal';
+import DeleteModal from '../components/DeleteModal';
 import { deleteNote } from '../actions/deleteNote';
 import { signOut } from '../actions/signOut';
-import { Card, CardSection, Header } from './common';
+import { Card, CardSection, Header, Button } from '../components/common';
 
 const width = Dimensions.get('window').width;
 
