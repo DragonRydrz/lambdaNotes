@@ -26,16 +26,6 @@ class LoginForm extends Component {
       this.props.authorize(token);
     }
   }
-  componentWillReceiveProps(props) {}
-
-  // deleteModal() {
-  //   if (this.state.modalOpen) {
-  //     return (
-
-  //     );
-  //   }
-  //   return null;
-  // }
 
   render() {
     // if (!this.props.loggedIn && props.loggedIn) {
