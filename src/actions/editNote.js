@@ -1,15 +1,16 @@
 import axios from 'axios';
 import { AsyncStorage } from 'react-native';
+import host from '../host';
 
 export const EDIT_NOTE = 'EDIT_NOTE';
 
-const host = 'https://ajlnbe.herokuapp.com/api';
+// const host = 'https://ajlnbe.herokuapp.com/api';
 
 export const editNote = data => dispatch => {
   AsyncStorage.getItem('Dragons!')
     .then(token => {
       axios
-        .put(`${host}/updatenote`, data, {
+        .put(`${host}/api/updatenote`, data, {
           headers: { Authorization: `Bearer ${token}` },
         })
         .then(response => {

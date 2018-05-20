@@ -1,14 +1,15 @@
 import axios from 'axios';
 import { AsyncStorage } from 'react-native';
+import host from '../host';
 
 export const DELETE_NOTE = 'DELETE_NOTE';
 
-const host = 'https://ajlnbe.herokuapp.com/api';
+// const host = 'https://ajlnbe.herokuapp.com/api';
 
 export const deleteNote = id => dispatch => {
   AsyncStorage.getItem('Dragons!').then(response => {
     axios
-      .delete(`${host}/destroynote/${id}`, {
+      .delete(`${host}/api/destroynote/${id}`, {
         headers: { Authorization: `Bearer ${response}` },
       })
       .then(response => {
