@@ -1,13 +1,22 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { createUser } from '../actions/createUser';
+
+import { SafeAreaView, View, Text } from 'react-native';
+import { Card, CardSection, Input, Button } from './common';
 
 class CreateUser extends Component {
+  // constructor() {
+  //   super();
   state = {
     username: '',
     password: '',
+    confirmPassword: '',
+    error: '',
   };
-
+  // }
   render() {
+    const { buttonViewStyle, errorTextStyle } = styles;
     return (
       <SafeAreaView>
         <Card>
@@ -28,14 +37,66 @@ class CreateUser extends Component {
               onChangeText={password => this.setState({ password })}
             />
           </CardSection>
+          <CardSection>
+            <Input
+              secureTextEntry
+              placeholder="confirm password"
+              label="Confirm"
+              value={this.state.confirmPassword}
+              onChangeText={confirmPassword =>
+                this.setState({ confirmPassword })
+              }
+            />
+          </CardSection>
 
-          <Text style={styles.errorTextStyle}>{this.state.error}</Text>
-
+          {this.state.error ? (
+            <Text style={styles.errorTextStyle}>{this.state.error}</Text>
+          ) : null}
           <CardSection>{this.renderButtons()}</CardSection>
         </Card>
       </SafeAreaView>
     );
   }
+  renderButtons = () => {
+    console.log(this.state, 'renderButtons');
+    // if (this.state.loading) {
+    //   return <Spinner size="small" />;
+    // }
+    return (
+      <View style={styles.buttonViewStyle}>
+        <Button onPress={this.createUserPressed}>Sign Up</Button>
+      </View>
+    );
+  };
+  createUserPressed = () => {
+    this.setState({ error: '' });
+    const { password, confirmPassword } = this.state;
+
+    this.state.password === this.state.confirmPassword
+      ? this.passwordsMatch()
+      : this.setState({ error: 'Passwords do not match!' });
+  };
+  passwordsMatch = () => {
+    const user = {
+      username: this.state.username,
+      password: this.state.password,
+    };
+    this.setState({ username: '', password: '', confirmPassword: '' });
+    this.props.createUser(user, this.props.navigation.navigate);
+  };
 }
 
-export default connect()(CreateUser);
+const styles = {
+  buttonViewStyle: {
+    flexDirection: 'row',
+    height: '100%',
+    width: '100%',
+  },
+  errorTextStyle: {
+    fontSize: 20,
+    alignSelf: 'center',
+    color: 'red',
+  },
+};
+
+export default connect(null, { createUser })(CreateUser);

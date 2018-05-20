@@ -123,18 +123,6 @@ class LoginForm extends Component {
         >
           Log In
         </Button>
-        <Button
-          onPress={() => {
-            const user = {
-              username: this.state.username,
-              password: this.state.password,
-            };
-            this.setState({ username: '', password: '' });
-            return this.props.createUser(user, this.props.navigation.navigate);
-          }}
-        >
-          Sign Up
-        </Button>
       </View>
     );
   }

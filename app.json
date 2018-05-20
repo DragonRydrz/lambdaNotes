@@ -1,7 +1,8 @@
 {
   "expo": {
     "name": "lambdanotes",
-    "description": "A simple note app.  Passwords are secured, please do not save sensitive data in your notes.",
+    "description":
+      "A simple note app.  Passwords are secured, please do not save sensitive data in your notes.",
     "slug": "lambdanotes",
     "privacy": "public",
     "sdkVersion": "27.0.0",
