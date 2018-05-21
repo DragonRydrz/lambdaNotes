@@ -1,25 +1,29 @@
 import axios from 'axios';
 import { AsyncStorage } from 'react-native';
-export const LOGIN = 'LOGIN';
+export const CHANGE_PASSWORD = 'CHANGE_PASSWORD';
 export const ERROR = 'ERROR';
 import host from '../host';
 
 // const host = 'https://ajlnbe.herokuapp.com/api/login';
 
 export const login = (data, navigate) => dispatch => {
-  axios
-    .post(`${host}/api/login`, data)
-    .then(response => {
-      // const user = response.data.user;
-      AsyncStorage.setItem('Dragons!', response.data.token);
-      dispatch({
-        type: LOGIN,
-        payload: response.data.user,
-      });
-      navigate('NotesList');
+  AsyncStorage.getItem('Dragons!')
+    .then(token => {
+      axios
+        .put(`${host}/api/updatenote`, data, {
+          headers: { Authorization: `Bearer ${token}` },
+        })
+        .then(response => {
+          dispatch({
+            type: EDIT_NOTE,
+            payload: response.data.notes,
+          });
+        })
+        .catch(err => {
+          dispatch({ type: 'ERROR', payload: err });
+        });
     })
     .catch(err => {
-      console.log(err, 'err');
-      alert('Login failed.  Please try again.');
+      dispatch({ type: 'ERROR', payload: err });
     });
 };
