@@ -14,6 +14,7 @@ const Input = ({
     <View style={containerStyle}>
       <Text style={labelStyle}>{label}</Text>
       <TextInput
+        underlineColorAndroid="rgba(0,0,0,0)"
         secureTextEntry={secureTextEntry}
         placeholder={placeholder}
         autoCorrect={false}

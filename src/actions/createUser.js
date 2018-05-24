@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { AsyncStorage } from 'react-native';
 import host from '../host';
+import { LOADING } from './loading';
 
 export const CREATE_USER = 'CREATE_USER';
 
@@ -29,5 +30,6 @@ export const createUser = (data, navigate) => dispatch => {
       }
 
       alert('Account creation failed.  Please try again.');
+      dispatch({ type: 'LOADING', payload: false });
     });
 };

@@ -2,8 +2,15 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { SafeAreaView, View, Text } from 'react-native';
 
+import { loading } from '../actions/loading';
 import { createUser } from '../actions/createUser';
-import { Card, CardSection, Input, Button } from '../components/common';
+import {
+  Card,
+  CardSection,
+  Input,
+  Button,
+  Spinner,
+} from '../components/common';
 
 class CreateUser extends Component {
   // constructor() {
@@ -58,10 +65,9 @@ class CreateUser extends Component {
     );
   }
   renderButtons = () => {
-    console.log(this.state, 'renderButtons');
-    // if (this.state.loading) {
-    //   return <Spinner size="small" />;
-    // }
+    if (this.props.isLoading) {
+      return <Spinner />;
+    }
     return (
       <View style={styles.buttonViewStyle}>
         <Button onPress={this.createUserPressed}>Sign Up</Button>
@@ -69,6 +75,7 @@ class CreateUser extends Component {
     );
   };
   createUserPressed = () => {
+    this.props.loading(true);
     this.setState({ error: '' });
     const { password, confirmPassword } = this.state;
 
@@ -99,4 +106,10 @@ const styles = {
   },
 };
 
-export default connect(null, { createUser })(CreateUser);
+const mapStateToProps = state => {
+  return {
+    isLoading: state.isLoading,
+  };
+};
+
+export default connect(mapStateToProps, { createUser, loading })(CreateUser);

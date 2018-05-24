@@ -5,6 +5,7 @@ import { SIGN_OUT } from '../actions/signOut';
 import { CREATE_USER } from '../actions/createUser';
 import { LOGIN } from '../actions/login';
 import { ERROR } from '../actions/login';
+import { LOADING } from '../actions/loading';
 
 const initState = {
   notes: [],
@@ -12,12 +13,17 @@ const initState = {
   loggedIn: false,
   error: null,
   token: null,
+  isLoading: false,
 };
 
 // export default combineReducers(notes);
 
 export default (state = initState, action) => {
   switch (action.type) {
+    case LOADING:
+      console.log('in loading reducer', action.payload);
+      return { ...state, isLoading: action.payload };
+      break;
     case ADD_NEW_NOTE:
       return { ...state, notes: action.payload };
     case EDIT_NOTE:
@@ -33,6 +39,7 @@ export default (state = initState, action) => {
         activeUser: action.payload,
         loggedIn: true,
         notes: action.payload.notes,
+        isLoading: false,
       };
     case SIGN_OUT:
       return {
@@ -47,6 +54,7 @@ export default (state = initState, action) => {
         activeUser: action.payload,
         notes: action.payload.notes,
         loggedIn: true,
+        isLoading: false,
       };
     case ERROR:
       return { ...state, error: action.payload };

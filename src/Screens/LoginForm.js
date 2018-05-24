@@ -10,8 +10,11 @@ import {
   Spinner,
   Header,
 } from '../components/common';
+
 import DeleteModal from '../components/DeleteModal';
 import NotesList from './NotesList';
+
+import { loading } from '../actions/loading';
 import { login } from '../actions/login';
 import { createUser } from '../actions/createUser';
 import { authorize } from '../actions/authorize';
@@ -74,37 +77,9 @@ class LoginForm extends Component {
     );
   }
 
-  loginOrNotes() {
-    return (
-      <Card>
-        <CardSection>
-          <Input
-            placeholder="username"
-            label="Username"
-            value={this.state.username}
-            onChangeText={username => this.setState({ username })}
-          />
-        </CardSection>
-        <CardSection>
-          <Input
-            secureTextEntry
-            placeholder="password"
-            label="Password"
-            value={this.state.password}
-            onChangeText={password => this.setState({ password })}
-          />
-        </CardSection>
-
-        <Text style={styles.errorTextStyle}>{this.state.error}</Text>
-
-        <CardSection>{this.renderButtons()}</CardSection>
-      </Card>
-    );
-  }
-
   renderButtons() {
-    if (this.state.loading) {
-      return <Spinner size="small" />;
+    if (this.props.isLoading) {
+      return <Spinner />;
     }
     return (
       <View style={styles.buttonViewStyle}>
@@ -115,6 +90,7 @@ class LoginForm extends Component {
               password: this.state.password,
             };
             this.setState({ username: '', password: '' });
+            this.props.loading(true);
             return this.props.login(user, this.props.navigation.navigate);
           }}
         >
@@ -143,9 +119,13 @@ const mapStateToProps = state => {
   return {
     loggedIn: state.loggedIn,
     notes: state.notes,
+    isLoading: state.isLoading,
   };
 };
 
-export default connect(mapStateToProps, { login, createUser, authorize })(
-  LoginForm
-);
+export default connect(mapStateToProps, {
+  login,
+  createUser,
+  authorize,
+  loading,
+})(LoginForm);
