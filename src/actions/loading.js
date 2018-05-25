@@ -1,4 +1,4 @@
-export const LOADING = 'LOADING';
+import { LOADING } from './types';
 
 export const loading = data => {
   console.log('in loading');

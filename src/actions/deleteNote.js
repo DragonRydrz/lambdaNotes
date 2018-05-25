@@ -1,8 +1,7 @@
 import axios from 'axios';
 import { AsyncStorage } from 'react-native';
 import host from '../host';
-
-export const DELETE_NOTE = 'DELETE_NOTE';
+import { DELETE_NOTE } from './types';
 
 // const host = 'https://ajlnbe.herokuapp.com/api';
 

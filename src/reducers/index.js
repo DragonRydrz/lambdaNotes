@@ -1,11 +1,13 @@
-import { ADD_NEW_NOTE } from '../actions/newNote';
-import { EDIT_NOTE } from '../actions/editNote';
-import { DELETE_NOTE } from '../actions/deleteNote';
-import { SIGN_OUT } from '../actions/signOut';
-import { CREATE_USER } from '../actions/createUser';
-import { LOGIN } from '../actions/login';
-import { ERROR } from '../actions/login';
-import { LOADING } from '../actions/loading';
+import { ADD_NEW_NOTE } from '../actions/types';
+import { CHANGE_PASSWORD } from '../actions/types';
+import { CLEAR_ERROR } from '../actions/types';
+import { CREATE_USER } from '../actions/types';
+import { DELETE_NOTE } from '../actions/types';
+import { EDIT_NOTE } from '../actions/types';
+import { ERROR } from '../actions/types';
+import { LOADING } from '../actions/types';
+import { LOGIN } from '../actions/types';
+import { SIGN_OUT } from '../actions/types';
 
 const initState = {
   notes: [],
@@ -58,6 +60,8 @@ export default (state = initState, action) => {
       };
     case ERROR:
       return { ...state, error: action.payload };
+    case CLEAR_ERROR:
+      return { ...state, error: null };
     default:
       return state;
   }

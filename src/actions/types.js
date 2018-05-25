@@ -1,0 +1,10 @@
+export const ADD_NEW_NOTE = 'ADD_NEW_NOTE';
+export const CHANGE_PASSWORD = 'CHANGE_PASSWORD';
+export const CLEAR_ERROR = 'CLEAR_ERRROR';
+export const CREATE_USER = 'CREATE_USER';
+export const DELETE_NOTE = 'DELETE_NOTE';
+export const EDIT_NOTE = 'EDIT_NOTE';
+export const ERROR = 'ERROR';
+export const LOADING = 'LOADING';
+export const LOGIN = 'LOGIN';
+export const SIGN_OUT = 'SIGN_OUT';

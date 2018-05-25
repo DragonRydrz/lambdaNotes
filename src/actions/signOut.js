@@ -1,7 +1,6 @@
 // import PropTypes from "prop-types";
 import { AsyncStorage } from 'react-native';
-
-export const SIGN_OUT = 'SIGN_OUT';
+import { SIGN_OUT } from './types';
 
 export const signOut = () => dispatch => {
   AsyncStorage.removeItem('Dragons!').then(response => {

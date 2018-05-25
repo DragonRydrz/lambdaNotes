@@ -1,5 +1,8 @@
 import React, { Component } from 'react';
 import { SafeAreaView } from 'react-native';
+import { connect } from 'react-redux';
+
+import { loading } from '../actions/types';
 import { Card, CardSection, Input, Button, Header } from '../components/common';
 
 class Options extends Component {
@@ -46,7 +49,7 @@ class Options extends Component {
             />
           </CardSection>
 
-          {this.state.error ? (
+          {this.props.error ? (
             <Text style={styles.errorTextStyle}>{this.state.error}</Text>
           ) : null}
           <CardSection>{this.renderButtons()}</CardSection>
@@ -60,4 +63,11 @@ class Options extends Component {
   };
 }
 
-export default Options;
+const mapStateToProps = state => {
+  return {
+    isLoading: state.isLoading,
+    error: state.error,
+  };
+};
+
+export default connect(mapStateToProps, { loading })(Options);

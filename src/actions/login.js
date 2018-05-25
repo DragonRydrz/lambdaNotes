@@ -1,10 +1,9 @@
 import axios from 'axios';
 import { AsyncStorage } from 'react-native';
-import { LOADING } from './loading';
+import { LOADING } from './types';
 import host from '../host';
-
-export const LOGIN = 'LOGIN';
-export const ERROR = 'ERROR';
+import { LOGIN } from './types';
+import { ERROR } from './types';
 
 // const host = 'https://ajlnbe.herokuapp.com/api/login';
 

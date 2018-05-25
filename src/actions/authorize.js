@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { LOGIN } from './login';
+import { LOGIN } from './types';
 import host from '../host';
 
 export const authorize = data => dispatch => {

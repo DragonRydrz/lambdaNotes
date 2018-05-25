@@ -1,9 +1,8 @@
 import axios from 'axios';
 import { AsyncStorage } from 'react-native';
 import host from '../host';
-import { LOADING } from './loading';
-
-export const CREATE_USER = 'CREATE_USER';
+import { LOADING } from './types';
+import { CREATE_USER } from './types';
 
 // const host = 'https://ajlnbe.herokuapp.com/api/register';
 

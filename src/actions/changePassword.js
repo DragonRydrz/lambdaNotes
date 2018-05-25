@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { AsyncStorage } from 'react-native';
-export const CHANGE_PASSWORD = 'CHANGE_PASSWORD';
-export const ERROR = 'ERROR';
+import { CHANGE_PASSWORD } from './types';
+import { ERROR } from './types';
 import host from '../host';
 
 // const host = 'https://ajlnbe.herokuapp.com/api/login';

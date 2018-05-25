@@ -1,7 +1,6 @@
 import axios from 'axios';
 import { AsyncStorage } from 'react-native';
-
-export const ADD_NEW_NOTE = 'ADD_NEW_NOTE';
+import { ADD_NEW_NOTE } from './types';
 import host from '../host';
 
 // const host = 'https://ajlnbe.herokuapp.com/api';
