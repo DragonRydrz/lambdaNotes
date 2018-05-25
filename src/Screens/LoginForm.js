@@ -29,25 +29,18 @@ class LoginForm extends Component {
   };
 
   componentDidMount() {
-    const token = AsyncStorage.getItem('Dragons')
-      .then(response => response)
-      .catch(err => null);
-    if (token) {
-      this.props.authorize(token);
-    }
+    AsyncStorage.getItem('Dragons')
+      .then(token => {
+        console.log(token, 'in AS.then');
+        if (token) {
+          this.props.authorize(token);
+        }
+      })
+      .catch(err => console.log(err));
+    // console.log(token);
   }
 
   render() {
-    // if (!this.props.loggedIn && props.loggedIn) {
-    // this.props.navigation.navigate('NotesList');
-    // return null;
-    // return <NotesList />;
-    // return (
-    //   <View style={{ flex: 1, borderWidth: 5, fontSize: 20 }}>
-    //     <Text>SHOW ME THIS</Text>
-    //   </View>
-    // );
-    // }
     return (
       <SafeAreaView>
         <Card>
