@@ -15,17 +15,14 @@ import {
 } from '../components/common';
 
 class CreateUser extends Component {
-  // constructor() {
-  //   super();
   state = {
     username: '',
     password: '',
     confirmPassword: '',
     error: '',
-    securityQuestion: '',
-    securityResponse: '',
+    question: '',
+    response: '',
   };
-  // }
   render() {
     const { buttonViewStyle, errorTextStyle } = styles;
     return (
@@ -66,7 +63,7 @@ class CreateUser extends Component {
                 initValue="Tap to Choose a Security Question"
                 onChange={option => {
                   console.log(option.label);
-                  this.setState({ securityQuestion: option.label });
+                  this.setState({ question: option.label });
                 }}
               />
             </View>
@@ -75,10 +72,8 @@ class CreateUser extends Component {
             <Input
               placeholder="security response"
               label="Answer"
-              value={this.state.securityResponse}
-              onChangeText={securityResponse =>
-                this.setState({ securityResponse })
-              }
+              value={this.state.response}
+              onChangeText={response => this.setState({ response })}
             />
           </CardSection>
 
@@ -114,10 +109,10 @@ class CreateUser extends Component {
     } else if (this.state.password !== this.state.confirmPassword) {
       this.setState({ error: 'Passwords do not match!' });
       this.props.loading(false);
-    } else if (this.state.securityQuestion === '') {
+    } else if (this.state.question === '') {
       this.setState({ error: 'Please choose a security question.' });
       this.props.loading(false);
-    } else if (this.state.securityResponse.length < 4) {
+    } else if (this.state.response.length < 4) {
       this.setState({ error: 'Answer must be at least 4 characters.' });
       this.props.loading(false);
     } else if (
@@ -132,11 +127,18 @@ class CreateUser extends Component {
       username: this.state.username,
       password: this.state.password,
       security: {
-        securityQuestion: this.state.securityQuestion,
-        securityResponse: this.state.securityResponse.toLowerCase(),
+        question: this.state.question,
+        response: this.state.response.toLowerCase(),
       },
     };
-    this.setState({ username: '', password: '', confirmPassword: '' });
+    this.setState({
+      username: '',
+      password: '',
+      confirmPassword: '',
+      error: '',
+      question: '',
+      response: '',
+    });
     this.props.createUser(user, this.props.navigation.navigate);
     this.props.loading(false);
   };
