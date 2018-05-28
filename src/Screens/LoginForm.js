@@ -62,43 +62,54 @@ class LoginForm extends Component {
             />
           </CardSection>
 
-          <Text style={styles.errorTextStyle}>{this.state.error}</Text>
+          {this.state.error ? (
+            <Text style={styles.errorTextStyle}>{this.state.error}</Text>
+          ) : null}
 
-          <CardSection>{this.renderButtons()}</CardSection>
+          {this.props.isLoading ? (
+            <Spinner />
+          ) : (
+            <View>
+              <CardSection>
+                <Button
+                  onPress={() => {
+                    const user = {
+                      username: this.state.username,
+                      password: this.state.password,
+                    };
+                    this.setState({ username: '', password: '' });
+                    this.props.loading(true);
+                    return this.props.login(
+                      user,
+                      this.props.navigation.navigate
+                    );
+                  }}
+                >
+                  Log In
+                </Button>
+              </CardSection>
+              <CardSection>
+                <Button
+                  onPress={() =>
+                    this.props.navigation.navigate('ForgotPassword')
+                  }
+                >
+                  Forgot Password?
+                </Button>
+              </CardSection>
+            </View>
+          )}
+          {/* <CardSection>{this.renderButtons()}</CardSection> */}
         </Card>
       </SafeAreaView>
     );
   }
-
-  renderButtons() {
-    if (this.props.isLoading) {
-      return <Spinner />;
-    }
-    return (
-      <View style={styles.buttonViewStyle}>
-        <Button
-          onPress={() => {
-            const user = {
-              username: this.state.username,
-              password: this.state.password,
-            };
-            this.setState({ username: '', password: '' });
-            this.props.loading(true);
-            return this.props.login(user, this.props.navigation.navigate);
-          }}
-        >
-          Log In
-        </Button>
-      </View>
-    );
-  }
-
-  loginPressed() {}
 }
 const styles = {
   buttonViewStyle: {
-    flexDirection: 'row',
-    height: '100%',
+    // flexDirection: 'row',
+    height: 85,
+    flex: 1,
     width: '100%',
   },
   errorTextStyle: {
