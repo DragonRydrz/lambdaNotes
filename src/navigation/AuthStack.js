@@ -1,8 +1,9 @@
 import { createStackNavigator } from 'react-navigation';
 
+import CreateUser from '../Screens/CreateUser';
+import ForgotPassword from '../Screens/ForgotPassword';
 import LandingScreen from '../Screens/LandingScreen';
 import LoginForm from '../Screens/LoginForm';
-import CreateUser from '../Screens/CreateUser';
 
 export default createStackNavigator(
   {
@@ -15,7 +16,7 @@ export default createStackNavigator(
     Login: {
       screen: LoginForm,
       navigationOptions: {
-        title: 'Lambda Notes',
+        title: 'Login',
       },
     },
     CreateUser: {
@@ -23,6 +24,9 @@ export default createStackNavigator(
       navigationOptions: {
         title: 'Create User',
       },
+    },
+    ForgotPassword: {
+      screen: ForgotPassword,
     },
   },
   {

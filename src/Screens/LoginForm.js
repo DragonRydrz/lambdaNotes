@@ -14,6 +14,9 @@ import {
 import DeleteModal from '../components/DeleteModal';
 import NotesList from './NotesList';
 
+import host from '../host';
+import { CHECK_USERNAME } from '../actions/types';
+import { postError, clearError } from '../actions/error';
 import { loading } from '../actions/loading';
 import { login } from '../actions/login';
 import { createUser } from '../actions/createUser';
@@ -61,23 +64,25 @@ class LoginForm extends Component {
               onChangeText={password => this.setState({ password })}
             />
           </CardSection>
-
-          {this.state.error ? (
-            <Text style={styles.errorTextStyle}>{this.state.error}</Text>
+          {this.props.error ? (
+            <Text style={styles.errorTextStyle}>{this.props.error}</Text>
           ) : null}
 
           {this.props.isLoading ? (
-            <Spinner />
+            <CardSection>
+              <Spinner />
+            </CardSection>
           ) : (
             <View>
               <CardSection>
                 <Button
                   onPress={() => {
+                    this.props.clearError();
                     const user = {
                       username: this.state.username,
                       password: this.state.password,
                     };
-                    this.setState({ username: '', password: '' });
+                    this.setState({ password: '' });
                     this.props.loading(true);
                     return this.props.login(
                       user,
@@ -89,13 +94,7 @@ class LoginForm extends Component {
                 </Button>
               </CardSection>
               <CardSection>
-                <Button
-                  onPress={() =>
-                    this.props.navigation.navigate('ForgotPassword')
-                  }
-                >
-                  Forgot Password?
-                </Button>
+                <Button onPress={this.forgotPressed}>Forgot Password?</Button>
               </CardSection>
             </View>
           )}
@@ -104,6 +103,21 @@ class LoginForm extends Component {
       </SafeAreaView>
     );
   }
+  forgotPressed = () => {
+    this.props.clearError();
+    if (this.state.username) {
+      axios
+        .get(`${host}/api/login/${this.state.username}`)
+        .then(response => {
+          this.props.navigation.navigate('ForgotPassword', {
+            question: response,
+          });
+        })
+        .catch(err => console.log(err));
+    } else {
+      this.props.postError('Enter your username');
+    }
+  };
 }
 const styles = {
   buttonViewStyle: {
@@ -124,6 +138,7 @@ const mapStateToProps = state => {
     loggedIn: state.loggedIn,
     notes: state.notes,
     isLoading: state.isLoading,
+    error: state.error,
   };
 };
 
@@ -132,4 +147,6 @@ export default connect(mapStateToProps, {
   createUser,
   authorize,
   loading,
+  postError,
+  clearError,
 })(LoginForm);

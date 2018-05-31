@@ -4,6 +4,7 @@ import { SafeAreaView, View, Text } from 'react-native';
 import ModalSelector from 'react-native-modal-selector';
 
 import { securityQuestions } from '../host';
+import { postError, clearError } from '../actions/error';
 import { loading } from '../actions/loading';
 import { createUser } from '../actions/createUser';
 import {
@@ -76,9 +77,9 @@ class CreateUser extends Component {
               onChangeText={response => this.setState({ response })}
             />
           </CardSection>
-
-          {this.state.error ? (
-            <Text style={styles.errorTextStyle}>{this.state.error}</Text>
+          {console.log(this.props, 'props')}
+          {this.props.error ? (
+            <Text style={styles.errorTextStyle}>{this.props.error}</Text>
           ) : null}
           <CardSection>{this.renderButtons()}</CardSection>
         </Card>
@@ -97,23 +98,23 @@ class CreateUser extends Component {
   };
   createUserPressed = () => {
     this.props.loading(true);
-    this.setState({ error: '' });
+    this.props.clearError();
     const { password, confirmPassword } = this.state;
 
     if (this.state.username.length < 4) {
-      this.setState({ error: 'Username must be at least 4 characters.' });
+      this.props.postError('Username must be at least 4 characters.');
       this.props.loading(false);
     } else if (this.state.password.length < 8) {
-      this.setState({ error: 'Password must be at least 8 characters.' });
+      this.props.postError('Password must be at least 8 characters.');
       this.props.loading(false);
     } else if (this.state.password !== this.state.confirmPassword) {
-      this.setState({ error: 'Passwords do not match!' });
+      this.props.postError('Passwords do not match!');
       this.props.loading(false);
     } else if (this.state.question === '') {
-      this.setState({ error: 'Please choose a security question.' });
+      this.props.postError('Please choose a security question.');
       this.props.loading(false);
     } else if (this.state.response.length < 4) {
-      this.setState({ error: 'Answer must be at least 4 characters.' });
+      this.props.postError('Answer must be at least 4 characters.');
       this.props.loading(false);
     } else if (
       this.state.password === this.state.confirmPassword &&
@@ -158,9 +159,16 @@ const styles = {
 };
 
 const mapStateToProps = state => {
+  console.log(state, 'state');
   return {
     isLoading: state.isLoading,
+    error: state.error,
   };
 };
 
-export default connect(mapStateToProps, { createUser, loading })(CreateUser);
+export default connect(mapStateToProps, {
+  createUser,
+  loading,
+  postError,
+  clearError,
+})(CreateUser);

@@ -20,8 +20,7 @@ export const login = (data, navigate) => dispatch => {
       navigate('NotesList');
     })
     .catch(err => {
-      console.log(err, 'err');
-      alert('Login failed.  Please try again.');
+      dispatch({ type: ERROR, payload: 'Login failed.  Please try again.' });
       dispatch({ type: LOADING, payload: false });
     });
 };
