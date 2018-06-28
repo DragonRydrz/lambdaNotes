@@ -2,27 +2,17 @@ import React, { Component } from 'react';
 import { SafeAreaView } from 'react-native';
 import { connect } from 'react-redux';
 
-import { loading } from '../actions/loading';
-import {
-  Card,
-  CardSection,
-  Input,
-  Button,
-  Header,
-  Spinner,
-  Text,
-} from '../components/common';
+import { loading } from '../actions/types';
+import { Card, CardSection, Input, Button, Header } from '../components/common';
 
 class Options extends Component {
   state = {
     oldPassword: '',
     newPassword: '',
     comfirmNewPassword: '',
-    error: this.props.error,
   };
 
   render() {
-    // console.log(this.props.error.response);
     return (
       <SafeAreaView>
         <Header headerText="Settings" />
@@ -60,9 +50,7 @@ class Options extends Component {
           </CardSection>
 
           {this.props.error ? (
-            <Text style={styles.errorTextStyle}>
-              {this.props.error.response.message}
-            </Text>
+            <Text style={styles.errorTextStyle}>{this.state.error}</Text>
           ) : null}
           <CardSection>{this.renderButtons()}</CardSection>
         </Card>
@@ -71,31 +59,9 @@ class Options extends Component {
   }
 
   renderButtons = () => {
-    if (this.props.isLoading) {
-      return <Spinner />;
-    }
-    return <Button onPress={this.handleChangePassword}>Change Password</Button>;
-  };
-
-  handleChangePassword = () => {
-    console.log(this.props);
-    this.props.loading(true);
-    setTimeout(() => this.props.loading(false), 2000);
+    return <Button>Change Password</Button>;
   };
 }
-
-const styles = {
-  buttonViewStyle: {
-    flexDirection: 'row',
-    height: '100%',
-    width: '100%',
-  },
-  errorTextStyle: {
-    fontSize: 20,
-    alignSelf: 'center',
-    color: 'red',
-  },
-};
 
 const mapStateToProps = state => {
   return {

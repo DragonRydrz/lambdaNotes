@@ -9,7 +9,5 @@ export const authorize = data => dispatch => {
       dispatch({ type: LOGIN, payload: response.data.user });
       // this.props.authorize(user);
     })
-    .catch(err =>
-      /*dispatch({ type: 'ERROR', payload: err })*/ console.log(err)
-    );
+    .catch(err => dispatch({ type: 'ERROR', payload: err }));
 };
