@@ -1,5 +1,5 @@
-const host = 'http://localhost:5000';
-// const host = 'https://ajlnbe.herokuapp.com';
+// const host = 'http://localhost:5000';
+const host = 'https://ajlnbe.herokuapp.com';
 export default host;
 
 let key = 0;

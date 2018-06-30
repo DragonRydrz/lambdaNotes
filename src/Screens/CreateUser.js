@@ -24,6 +24,11 @@ class CreateUser extends Component {
     question: '',
     response: '',
   };
+
+  componentDidMount() {
+    this.props.clearError();
+  }
+
   render() {
     const { buttonViewStyle, errorTextStyle } = styles;
     return (
@@ -57,7 +62,7 @@ class CreateUser extends Component {
               }
             />
           </CardSection>
-          <CardSection>
+          {/* <CardSection>
             <View style={{ width: '100%', justifyContent: 'center' }}>
               <ModalSelector
                 data={securityQuestions}
@@ -76,8 +81,7 @@ class CreateUser extends Component {
               value={this.state.response}
               onChangeText={response => this.setState({ response })}
             />
-          </CardSection>
-          {console.log(this.props, 'props')}
+          </CardSection> */}
           {this.props.error ? (
             <Text style={styles.errorTextStyle}>{this.props.error}</Text>
           ) : null}
@@ -110,12 +114,12 @@ class CreateUser extends Component {
     } else if (this.state.password !== this.state.confirmPassword) {
       this.props.postError('Passwords do not match!');
       this.props.loading(false);
-    } else if (this.state.question === '') {
-      this.props.postError('Please choose a security question.');
-      this.props.loading(false);
-    } else if (this.state.response.length < 4) {
-      this.props.postError('Answer must be at least 4 characters.');
-      this.props.loading(false);
+      // } else if (this.state.question === '') {
+      //   this.props.postError('Please choose a security question.');
+      //   this.props.loading(false);
+      // } else if (this.state.response.length < 4) {
+      //   this.props.postError('Answer must be at least 4 characters.');
+      //   this.props.loading(false);
     } else if (
       this.state.password === this.state.confirmPassword &&
       this.state.password !== ''
@@ -127,18 +131,18 @@ class CreateUser extends Component {
     const user = {
       username: this.state.username,
       password: this.state.password,
-      security: {
-        question: this.state.question,
-        response: this.state.response.toLowerCase(),
-      },
+      // security: {
+      //   question: this.state.question,
+      //   response: this.state.response.toLowerCase(),
+      // },
     };
     this.setState({
       username: '',
       password: '',
       confirmPassword: '',
       error: '',
-      question: '',
-      response: '',
+      // question: '',
+      // response: '',
     });
     this.props.createUser(user, this.props.navigation.navigate);
     this.props.loading(false);
@@ -159,16 +163,19 @@ const styles = {
 };
 
 const mapStateToProps = state => {
-  console.log(state, 'state');
+  // console.log(state, 'state');
   return {
     isLoading: state.isLoading,
     error: state.error,
   };
 };
 
-export default connect(mapStateToProps, {
-  createUser,
-  loading,
-  postError,
-  clearError,
-})(CreateUser);
+export default connect(
+  mapStateToProps,
+  {
+    createUser,
+    loading,
+    postError,
+    clearError,
+  }
+)(CreateUser);
