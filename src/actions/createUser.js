@@ -25,6 +25,7 @@ export const createUser = (data, navigate) => dispatch => {
       console.log(err.response, 'error line 28');
       if (err.response.status === 403) {
         alert(err.response.data.message);
+        dispatch({ type: 'LOADING', payload: false });
         return;
       }
 

@@ -9,7 +9,7 @@
     "platforms": ["ios", "android"],
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/icon.png",
+    "icon": "./assets/appIcon.png",
     "primaryColor": "#A0001D",
     "splash": {
       "image": "./assets/icon.png",
