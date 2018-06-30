@@ -31,7 +31,6 @@ class LoginForm extends Component {
   componentDidMount() {
     AsyncStorage.getItem('Dragons')
       .then(token => {
-        console.log(token, 'in AS.then');
         if (token) {
           this.props.authorize(token);
         }
@@ -61,8 +60,9 @@ class LoginForm extends Component {
               onChangeText={password => this.setState({ password })}
             />
           </CardSection>
-
-          <Text style={styles.errorTextStyle}>{this.state.error}</Text>
+          {this.state.error ? (
+            <Text style={styles.errorTextStyle}>{this.state.error}</Text>
+          ) : null}
 
           <CardSection>{this.renderButtons()}</CardSection>
         </Card>
@@ -116,9 +116,12 @@ const mapStateToProps = state => {
   };
 };
 
-export default connect(mapStateToProps, {
-  login,
-  createUser,
-  authorize,
-  loading,
-})(LoginForm);
+export default connect(
+  mapStateToProps,
+  {
+    login,
+    createUser,
+    authorize,
+    loading,
+  }
+)(LoginForm);

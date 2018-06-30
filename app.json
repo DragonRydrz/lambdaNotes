@@ -1,6 +1,6 @@
 {
   "expo": {
-    "name": "lambdanotes",
+    "name": "Lambda Notes",
     "description":
       "A simple note app.  Passwords are secured, please do not save sensitive data in your notes.",
     "slug": "lambdanotes",
@@ -25,7 +25,11 @@
     },
     "assetBundlePatterns": ["**/*"],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.ajgenung.lambdanotes"
+    },
+    "android": {
+      "package": "com.ajgenung.lambdanotes"
     }
   }
 }
