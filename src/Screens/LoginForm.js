@@ -73,7 +73,6 @@ class LoginForm extends Component {
               onChangeText={password => this.setState({ password })}
             />
           </CardSection>
-          {console.log(this.props.error)}
           {this.props.error ? (
             <Text style={styles.errorTextStyle}>{this.props.error}</Text>
           ) : null}
@@ -103,9 +102,9 @@ class LoginForm extends Component {
                   Log In
                 </Button>
               </CardSection>
-              <CardSection>
+              {/* <CardSection>
                 <Button onPress={this.forgotPressed}>Forgot Password?</Button>
-              </CardSection>
+              </CardSection> */}
             </View>
           )}
           {/* <CardSection>{this.renderButtons()}</CardSection> */}

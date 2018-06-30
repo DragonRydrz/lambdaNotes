@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { SafeAreaView } from 'react-native';
+import { SafeAreaView, Text } from 'react-native';
 import { connect } from 'react-redux';
 
 import { loading } from '../actions/types';
@@ -18,6 +18,20 @@ class Options extends Component {
         <Header headerText="Settings" />
         <Card>
           <Header headerText="Change Password" />
+        </Card>
+        <Card>
+          <Text
+            style={{
+              textAlign: 'center',
+              marginLeft: 40,
+              marginRight: 40,
+              marginTop: 30,
+              fontSize: 20,
+            }}
+          >
+            This feature will be implimented in a future release. Thank you for
+            your patience!
+          </Text>
         </Card>
         <Card>
           <CardSection>
@@ -70,4 +84,7 @@ const mapStateToProps = state => {
   };
 };
 
-export default connect(mapStateToProps, { loading })(Options);
+export default connect(
+  mapStateToProps,
+  { loading }
+)(Options);
