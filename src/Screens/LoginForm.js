@@ -87,6 +87,13 @@ class LoginForm extends Component {
                 <Button
                   onPress={() => {
                     this.props.clearError();
+                    // axios
+                    //   .post('http://159.89.34.14/api/register', {
+                    //     username: 'manualtest',
+                    //     password: '123456789',
+                    //   })
+                    //   .then(response => console.log(response.data))
+                    //   .catch(err => console.log(`Err: ${err}`));
                     const user = {
                       username: this.state.username,
                       password: this.state.password,
