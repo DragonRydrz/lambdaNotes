@@ -8,6 +8,8 @@ import { ERROR } from './types';
 // const host = 'https://ajlnbe.herokuapp.com/api/login';
 
 export const login = (data, navigate) => dispatch => {
+  // console.log(data);
+  // console.log(`${host}/api/login`);
   axios
     .post(`${host}/api/login`, data)
     .then(response => {
