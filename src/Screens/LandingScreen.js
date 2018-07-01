@@ -17,6 +17,10 @@ class LandingScreen extends Component {
           <Text style={welcomeStyle}>Welcome</Text>
           <Text style={welcomeStyle}>to</Text>
           <Text style={welcomeStyle}>LambdaNotes</Text>
+          {/* <Text style={{ ...aboutStyle, fontSize: 20 }}>
+            Data can be reset during alpha when new features are being added.
+            User data was last reset on 5/27.
+          </Text> */}
           <Text style={aboutStyle}>
             This is a simple app to store notes securly. Please do not include
             any sensitive information in your notes. (i.e. Social Security

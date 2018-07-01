@@ -1,5 +1,6 @@
 export const ADD_NEW_NOTE = 'ADD_NEW_NOTE';
 export const CHANGE_PASSWORD = 'CHANGE_PASSWORD';
+export const CHECK_USERNAME = 'CHECK_USERNAME';
 export const CLEAR_ERROR = 'CLEAR_ERRROR';
 export const CREATE_USER = 'CREATE_USER';
 export const DELETE_NOTE = 'DELETE_NOTE';

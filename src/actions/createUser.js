@@ -8,6 +8,7 @@ import { CREATE_USER } from './types';
 
 export const createUser = (data, navigate) => dispatch => {
   console.log(`${host}/api/register`, 'host');
+  console.log('Data: ', data);
   axios
     .post(`${host}/api/register`, data)
     .then(response => {
@@ -22,7 +23,7 @@ export const createUser = (data, navigate) => dispatch => {
       navigate('NotesList');
     })
     .catch(err => {
-      console.log(err.response, 'error line 28');
+      console.log(err, 'error line 28');
       if (err.response.status === 403) {
         alert(err.response.data.message);
         dispatch({ type: 'LOADING', payload: false });

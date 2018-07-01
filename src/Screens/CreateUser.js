@@ -1,7 +1,10 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { SafeAreaView, View, Text } from 'react-native';
+import ModalSelector from 'react-native-modal-selector';
 
+import { securityQuestions } from '../host';
+import { postError, clearError } from '../actions/error';
 import { loading } from '../actions/loading';
 import { createUser } from '../actions/createUser';
 import {
@@ -13,15 +16,19 @@ import {
 } from '../components/common';
 
 class CreateUser extends Component {
-  // constructor() {
-  //   super();
   state = {
     username: '',
     password: '',
     confirmPassword: '',
     error: '',
+    question: '',
+    response: '',
   };
-  // }
+
+  componentDidMount() {
+    this.props.clearError();
+  }
+
   render() {
     const { buttonViewStyle, errorTextStyle } = styles;
     return (
@@ -55,9 +62,28 @@ class CreateUser extends Component {
               }
             />
           </CardSection>
-
-          {this.state.error ? (
-            <Text style={styles.errorTextStyle}>{this.state.error}</Text>
+          {/* <CardSection>
+            <View style={{ width: '100%', justifyContent: 'center' }}>
+              <ModalSelector
+                data={securityQuestions}
+                initValue="Tap to Choose a Security Question"
+                onChange={option => {
+                  console.log(option.label);
+                  this.setState({ question: option.label });
+                }}
+              />
+            </View>
+          </CardSection>
+          <CardSection>
+            <Input
+              placeholder="security response"
+              label="Answer"
+              value={this.state.response}
+              onChangeText={response => this.setState({ response })}
+            />
+          </CardSection> */}
+          {this.props.error ? (
+            <Text style={styles.errorTextStyle}>{this.props.error}</Text>
           ) : null}
           <CardSection>{this.renderButtons()}</CardSection>
         </Card>
@@ -76,20 +102,50 @@ class CreateUser extends Component {
   };
   createUserPressed = () => {
     this.props.loading(true);
-    this.setState({ error: '' });
+    this.props.clearError();
     const { password, confirmPassword } = this.state;
 
-    this.state.password === this.state.confirmPassword
-      ? this.passwordsMatch()
-      : this.setState({ error: 'Passwords do not match!' });
+    if (this.state.username.length < 4) {
+      this.props.postError('Username must be at least 4 characters.');
+      this.props.loading(false);
+    } else if (this.state.password.length < 8) {
+      this.props.postError('Password must be at least 8 characters.');
+      this.props.loading(false);
+    } else if (this.state.password !== this.state.confirmPassword) {
+      this.props.postError('Passwords do not match!');
+      this.props.loading(false);
+      // } else if (this.state.question === '') {
+      //   this.props.postError('Please choose a security question.');
+      //   this.props.loading(false);
+      // } else if (this.state.response.length < 4) {
+      //   this.props.postError('Answer must be at least 4 characters.');
+      //   this.props.loading(false);
+    } else if (
+      this.state.password === this.state.confirmPassword &&
+      this.state.password !== ''
+    ) {
+      this.passwordsMatch();
+    }
   };
   passwordsMatch = () => {
     const user = {
       username: this.state.username,
       password: this.state.password,
+      // security: {
+      //   question: this.state.question,
+      //   response: this.state.response.toLowerCase(),
+      // },
     };
-    this.setState({ username: '', password: '', confirmPassword: '' });
+    this.setState({
+      username: '',
+      password: '',
+      confirmPassword: '',
+      error: '',
+      // question: '',
+      // response: '',
+    });
     this.props.createUser(user, this.props.navigation.navigate);
+    this.props.loading(false);
   };
 }
 
@@ -107,9 +163,19 @@ const styles = {
 };
 
 const mapStateToProps = state => {
+  // console.log(state, 'state');
   return {
     isLoading: state.isLoading,
+    error: state.error,
   };
 };
 
-export default connect(mapStateToProps, { createUser, loading })(CreateUser);
+export default connect(
+  mapStateToProps,
+  {
+    createUser,
+    loading,
+    postError,
+    clearError,
+  }
+)(CreateUser);

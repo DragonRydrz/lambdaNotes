@@ -14,6 +14,9 @@ import {
 import DeleteModal from '../components/DeleteModal';
 import NotesList from './NotesList';
 
+import host from '../host';
+import { CHECK_USERNAME } from '../actions/types';
+import { postError, clearError } from '../actions/error';
 import { loading } from '../actions/loading';
 import { login } from '../actions/login';
 import { createUser } from '../actions/createUser';
@@ -29,17 +32,27 @@ class LoginForm extends Component {
   };
 
   componentDidMount() {
-    AsyncStorage.getItem('Dragons')
-      .then(token => {
-        if (token) {
-          this.props.authorize(token);
-        }
-      })
-      .catch(err => console.log(err));
-    // console.log(token);
+    // AsyncStorage.getItem('Dragons')
+    //   .then(token => {
+    //     if (token) {
+    //       this.props.authorize(token);
+    //     }
+    //   })
+    //   .catch(err => null);
+    this.props.clearError();
   }
 
   render() {
+    // if (!this.props.loggedIn && props.loggedIn) {
+    // this.props.navigation.navigate('NotesList');
+    // return null;
+    // return <NotesList />;
+    // return (
+    //   <View style={{ flex: 1, borderWidth: 5, fontSize: 20 }}>
+    //     <Text>SHOW ME THIS</Text>
+    //   </View>
+    // );
+    // }
     return (
       <SafeAreaView>
         <Card>
@@ -60,45 +73,73 @@ class LoginForm extends Component {
               onChangeText={password => this.setState({ password })}
             />
           </CardSection>
-          {this.state.error ? (
-            <Text style={styles.errorTextStyle}>{this.state.error}</Text>
+          {this.props.error ? (
+            <Text style={styles.errorTextStyle}>{this.props.error}</Text>
           ) : null}
 
-          <CardSection>{this.renderButtons()}</CardSection>
+          {this.props.isLoading ? (
+            <CardSection>
+              <Spinner />
+            </CardSection>
+          ) : (
+            <View>
+              <CardSection>
+                <Button
+                  onPress={() => {
+                    this.props.clearError();
+                    // axios
+                    //   .post('http://159.89.34.14/api/register', {
+                    //     username: 'manualtest',
+                    //     password: '123456789',
+                    //   })
+                    //   .then(response => console.log(response.data))
+                    //   .catch(err => console.log(`Err: ${err}`));
+                    const user = {
+                      username: this.state.username,
+                      password: this.state.password,
+                    };
+                    this.setState({ password: '' });
+                    this.props.loading(true);
+                    return this.props.login(
+                      user,
+                      this.props.navigation.navigate
+                    );
+                  }}
+                >
+                  Log In
+                </Button>
+              </CardSection>
+              {/* <CardSection>
+                <Button onPress={this.forgotPressed}>Forgot Password?</Button>
+              </CardSection> */}
+            </View>
+          )}
+          {/* <CardSection>{this.renderButtons()}</CardSection> */}
         </Card>
       </SafeAreaView>
     );
   }
-
-  renderButtons() {
-    if (this.props.isLoading) {
-      return <Spinner />;
+  forgotPressed = () => {
+    this.props.clearError();
+    if (this.state.username) {
+      axios
+        .get(`${host}/api/login/${this.state.username}`)
+        .then(response => {
+          this.props.navigation.navigate('ForgotPassword', {
+            question: response,
+          });
+        })
+        .catch(err => console.log(err));
+    } else {
+      this.props.postError('Enter your username');
     }
-    return (
-      <View style={styles.buttonViewStyle}>
-        <Button
-          onPress={() => {
-            const user = {
-              username: this.state.username,
-              password: this.state.password,
-            };
-            this.setState({ username: '', password: '' });
-            this.props.loading(true);
-            return this.props.login(user, this.props.navigation.navigate);
-          }}
-        >
-          Log In
-        </Button>
-      </View>
-    );
-  }
-
-  loginPressed() {}
+  };
 }
 const styles = {
   buttonViewStyle: {
-    flexDirection: 'row',
-    height: '100%',
+    // flexDirection: 'row',
+    height: 85,
+    flex: 1,
     width: '100%',
   },
   errorTextStyle: {
@@ -113,6 +154,7 @@ const mapStateToProps = state => {
     loggedIn: state.loggedIn,
     notes: state.notes,
     isLoading: state.isLoading,
+    error: state.error,
   };
 };
 
@@ -123,5 +165,7 @@ export default connect(
     createUser,
     authorize,
     loading,
+    postError,
+    clearError,
   }
 )(LoginForm);

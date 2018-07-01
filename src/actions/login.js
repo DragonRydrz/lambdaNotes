@@ -8,6 +8,8 @@ import { ERROR } from './types';
 // const host = 'https://ajlnbe.herokuapp.com/api/login';
 
 export const login = (data, navigate) => dispatch => {
+  // console.log(data);
+  // console.log(`${host}/api/login`);
   axios
     .post(`${host}/api/login`, data)
     .then(response => {
@@ -20,8 +22,7 @@ export const login = (data, navigate) => dispatch => {
       navigate('NotesList');
     })
     .catch(err => {
-      console.log(err, 'err');
-      alert('Login failed.  Please try again.');
+      dispatch({ type: ERROR, payload: 'Login failed.  Please try again.' });
       dispatch({ type: LOADING, payload: false });
     });
 };
