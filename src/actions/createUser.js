@@ -15,7 +15,7 @@ export const createUser = (data, navigate) => dispatch => {
       console.log(response, 'response');
 
       const { user, token } = response.data;
-      AsyncStorage.setItem('Dragons', token);
+      AsyncStorage.setItem('Dragons!', token);
       dispatch({
         type: CREATE_USER,
         payload: user,
