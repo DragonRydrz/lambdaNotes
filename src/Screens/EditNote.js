@@ -45,10 +45,12 @@ class EditNote extends Component {
             value={this.state.title}
             placeholder="Note Title"
             onChangeText={title => this.titleChange(title)}
+            autoCorrect={true}
           />
         </CardSection>
         <CardSection>
           <TextInput
+            underlineColorAndroid="rgba(0,0,0,0)"
             style={styles.inputStyle}
             value={this.state.body}
             placeholder="Note Body"
@@ -82,4 +84,7 @@ const styles = {
   },
 };
 
-export default connect(null, { editNote })(EditNote);
+export default connect(
+  null,
+  { editNote }
+)(EditNote);

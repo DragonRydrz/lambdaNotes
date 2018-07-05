@@ -17,12 +17,21 @@ import { connect } from 'react-redux';
 import DeleteModal from '../components/DeleteModal';
 import { deleteNote } from '../actions/deleteNote';
 import { signOut } from '../actions/signOut';
-import { Card, CardSection, Header, Button } from '../components/common';
+import { getNotes } from '../actions/getNotes';
+import { loading } from '../actions/loading';
+import {
+  Card,
+  CardSection,
+  Header,
+  Button,
+  InputNoLabel,
+} from '../components/common';
 
-const width = Dimensions.get('window').width;
+const { width, height } = Dimensions.get('window').width;
 
 class NotesList extends Component {
   state = {
+    search: '',
     deleteVisible: false,
     deleteConfirm: null,
   };
@@ -44,6 +53,7 @@ class NotesList extends Component {
       addNote: this.addNote,
       signOut: this.signOut,
     });
+    this.setState({ filteredNotes: this.props.notes });
   }
   signOut = () => {
     this.props.signOut();
@@ -71,18 +81,46 @@ class NotesList extends Component {
     return null;
   }
 
+  filteredNotes = notes => {
+    const filteredNotes = notes.filter(
+      item =>
+        item.title.toLowerCase().includes(this.state.search.toLowerCase()) ||
+        item.body.toLowerCase().includes(this.state.search.toLowerCase())
+    );
+    return filteredNotes;
+  };
+
   render() {
     const { titleStyle, bodyStyle } = styles;
     return (
-      <SafeAreaView>
+      <SafeAreaView style={{ flex: 1 }}>
         {this.deleteModal()}
-        <Header headerText={this.props.username} />
+        <View>
+          <Card>
+            <Header headerText={this.props.username} />
+          </Card>
+          <Card>
+            <CardSection>
+              <InputNoLabel
+                // value={this.state.title}
+                placeholder="Search"
+                onChangeText={search => this.setState({ search })}
+                autoCorrect={false}
+              />
+            </CardSection>
+          </Card>
+        </View>
         <FlatList
-          style={{ height: '87%' }}
-          data={this.props.notes}
+          data={this.filteredNotes(this.props.notes)}
           keyExtractor={item => item._id}
+          // onRefresh={() => {
+          //   this.props.loading(true);
+          //   this.props.getNotes();
+          // }}
+          // refreshing={this.props.isLoading}
           renderItem={({ item }) => (
             <Card>
+              {console.log(this.props.isLoading)}
               <CardSection>
                 <Text style={titleStyle}>{item.title.toUpperCase()}</Text>
               </CardSection>
@@ -138,7 +176,11 @@ const mapStateToProps = state => {
   return {
     notes: state.notes,
     username: state.activeUser.username,
+    isLoading: state.isLoading,
   };
 };
 
-export default connect(mapStateToProps, { signOut, deleteNote })(NotesList);
+export default connect(
+  mapStateToProps,
+  { signOut, deleteNote, getNotes, loading }
+)(NotesList);

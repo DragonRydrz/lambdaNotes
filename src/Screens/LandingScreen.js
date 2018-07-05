@@ -22,7 +22,7 @@ class LandingScreen extends Component {
             User data was last reset on 5/27.
           </Text> */}
           <Text style={aboutStyle}>
-            This is a simple app to store notes securly. Please do not include
+            This is a simple app to store notes securely. Please do not include
             any sensitive information in your notes. (i.e. Social Security
             number, Credit Card number, passwords...)
           </Text>

@@ -1,13 +1,16 @@
-import { ADD_NEW_NOTE } from '../actions/types';
-import { CHANGE_PASSWORD } from '../actions/types';
-import { CLEAR_ERROR } from '../actions/types';
-import { CREATE_USER } from '../actions/types';
-import { DELETE_NOTE } from '../actions/types';
-import { EDIT_NOTE } from '../actions/types';
-import { ERROR } from '../actions/types';
-import { LOADING } from '../actions/types';
-import { LOGIN } from '../actions/types';
-import { SIGN_OUT } from '../actions/types';
+import {
+  ADD_NEW_NOTE,
+  CHANGE_PASSWORD,
+  CLEAR_ERROR,
+  CREATE_USER,
+  DELETE_NOTE,
+  EDIT_NOTE,
+  ERROR,
+  GET_NOTES,
+  LOADING,
+  LOGIN,
+  SIGN_OUT,
+} from '../actions/types';
 
 const initState = {
   notes: [],
@@ -28,7 +31,9 @@ export default (state = initState, action) => {
         ...state,
         isLoading: action.payload,
       };
-      break;
+    case GET_NOTES:
+      console.log('in GET_NOTES');
+      return { ...state, isLoading: false, notes: action.payload };
     case ADD_NEW_NOTE:
       return {
         ...state,

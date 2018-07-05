@@ -6,16 +6,17 @@ const InputNoLabel = ({
   onChangeText,
   placeholder,
   secureTextEntry,
-  multiline,
+  autoCorrect,
 }) => {
   const { labelStyle, inputStyle, containerStyle } = styles;
 
   return (
     <View style={containerStyle}>
       <TextInput
+        underlineColorAndroid="rgba(0,0,0,0)"
         secureTextEntry={secureTextEntry}
         placeholder={placeholder}
-        autoCorrect={false}
+        autoCorrect={autoCorrect}
         style={inputStyle}
         value={value}
         onChangeText={onChangeText}
