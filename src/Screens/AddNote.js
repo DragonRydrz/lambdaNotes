@@ -83,7 +83,9 @@ class EditNote extends Component {
               multiline={true}
               // numberOfLines={7}
               // height={240}
-              maxHeight={this.state.isKeyboardOpen ? 240 : height - 250}
+              maxHeight={
+                this.state.isKeyboardOpen ? height * 0.3 : height - 250
+              }
             />
           </CardSection>
           {/* <CardSection>
