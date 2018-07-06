@@ -84,7 +84,7 @@ class EditNote extends Component {
             placeholder="Note Body"
             onChangeText={body => this.bodyChange(body)}
             multiline={true}
-            maxHeight={this.state.isKeyboardOpen ? 240 : height - 250}
+            maxHeight={this.state.isKeyboardOpen ? height * 0.3 : height - 250}
           />
         </CardSection>
         {/* <CardSection>
