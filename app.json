@@ -30,7 +30,9 @@
       "bundleIdentifier": "com.ajgenung.lambdanotes"
     },
     "android": {
-      "package": "com.ajgenung.lambdanotes"
+      "package": "com.ajgenung.lambdanotes",
+      "versionCode": 2,
+      "permissions": []
     }
   }
 }

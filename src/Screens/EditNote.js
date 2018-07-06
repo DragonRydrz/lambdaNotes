@@ -1,8 +1,15 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { TextInput, Button as Button2 } from 'react-native';
+import {
+  Keyboard,
+  Dimensions,
+  TextInput,
+  Button as Button2,
+} from 'react-native';
 import { Card, CardSection, InputNoLabel, Button } from '../components/common';
 import { editNote } from '../actions/editNote';
+
+const { height } = Dimensions.get('window');
 
 class EditNote extends Component {
   state = {
@@ -20,6 +27,14 @@ class EditNote extends Component {
   };
 
   componentDidMount() {
+    this.keyboardDidShowListener = Keyboard.addListener(
+      'keyboardDidShow',
+      this._keyboardDidShow
+    );
+    this.keyboardDidHideListener = Keyboard.addListener(
+      'keyboardDidHide',
+      this._keyboardDidHide
+    );
     const { _id, title, body } = this.props.navigation.state.params.note;
     this.setState({ _id, title, body });
     this.props.navigation.setParams({
@@ -29,6 +44,19 @@ class EditNote extends Component {
       },
     });
   }
+
+  componentWillUnmount() {
+    this.keyboardDidShowListener.remove();
+    this.keyboardDidHideListener.remove();
+  }
+
+  _keyboardDidShow = () => {
+    this.setState({ isKeyboardOpen: true });
+  };
+
+  _keyboardDidHide = () => {
+    this.setState({ isKeyboardOpen: false });
+  };
 
   titleChange(title) {
     this.setState({ title });
@@ -56,6 +84,7 @@ class EditNote extends Component {
             placeholder="Note Body"
             onChangeText={body => this.bodyChange(body)}
             multiline={true}
+            maxHeight={this.state.isKeyboardOpen ? 240 : height - 250}
           />
         </CardSection>
         {/* <CardSection>

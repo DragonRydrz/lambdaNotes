@@ -26,6 +26,7 @@ class Options extends Component {
               marginLeft: 40,
               marginRight: 40,
               marginTop: 30,
+              marginBottom: 30,
               fontSize: 20,
             }}
           >
