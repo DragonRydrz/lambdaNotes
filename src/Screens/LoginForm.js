@@ -32,13 +32,14 @@ class LoginForm extends Component {
   };
 
   componentDidMount() {
-    // AsyncStorage.getItem('Dragons')
-    //   .then(token => {
-    //     if (token) {
-    //       this.props.authorize(token);
-    //     }
-    //   })
-    //   .catch(err => null);
+    AsyncStorage.getItem('Dragons!')
+      .then(token => {
+        console.log(token);
+        if (token) {
+          this.props.authorize(token, this.props.navigation.navigate);
+        }
+      })
+      .catch(err => null);
     this.props.clearError();
   }
 
