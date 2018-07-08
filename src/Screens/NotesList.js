@@ -120,7 +120,6 @@ class NotesList extends Component {
           // refreshing={this.props.isLoading}
           renderItem={({ item }) => (
             <Card>
-              {console.log(this.props.isLoading)}
               <CardSection>
                 <Text style={titleStyle}>{item.title.toUpperCase()}</Text>
               </CardSection>

@@ -12,7 +12,7 @@ export const authorize = (data, navigate) => dispatch => {
       },
     })
     .then(response => {
-      console.log(response.data.token);
+      // console.log(response.data.token);
       AsyncStorage.setItem('Dragons!', response.data.token);
       dispatch({ type: LOGIN, payload: response.data.user });
       navigate('NotesList');
