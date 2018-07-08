@@ -6,6 +6,27 @@ import { authorize } from '../actions/authorize';
 import { connect } from 'react-redux';
 
 class LandingScreen extends Component {
+  componentDidMount() {
+    AsyncStorage.getItem('Dragons!')
+      .then(token => {
+        console.log(token);
+        if (token) {
+          this.props.authorize(token, this.props.navigation.navigate);
+        }
+      })
+      .catch(err => null);
+  }
+  async getData() {
+    const temp = await AsyncStorage.getItem('Dragons!')
+      .then(token => {
+        console.log(token);
+        if (token) {
+          this.props.authorize(token, this.props.navigation.navigate);
+        }
+      })
+      .catch(err => null);
+  }
+
   render() {
     const {
       containerStyle,
@@ -14,6 +35,7 @@ class LandingScreen extends Component {
       textStyle,
       buttonContainerStyle,
     } = styles;
+    // this.getData();
     return (
       <SafeAreaView style={containerStyle}>
         <View style={textStyle}>
@@ -31,21 +53,7 @@ class LandingScreen extends Component {
           </Text>
         </View>
         <View style={buttonContainerStyle}>
-          <Button
-            onPress={() => {
-              AsyncStorage.getItem('Dragons!')
-                .then(token => {
-                  console.log(token);
-                  if (token) {
-                    this.props.authorize(token, this.props.navigation.navigate);
-                  } else {
-                    this.props.navigation.navigate('Login');
-                  }
-                })
-                .catch(err => null);
-              this.props.clearError();
-            }}
-          >
+          <Button onPress={() => this.props.navigation.navigate('Login')}>
             Existing User
           </Button>
           <Button onPress={() => this.props.navigation.navigate('CreateUser')}>
