@@ -2,7 +2,7 @@ import { createStackNavigator } from 'react-navigation';
 
 import NotesList from '../Screens/NotesList';
 import EditNote from '../Screens/EditNote';
-import AddNote from '../Screens/AddNote';
+import AddNote from '../Screens/AddNote/AddNote';
 
 export default createStackNavigator(
   {

@@ -11,7 +11,7 @@ import {
   Dimensions,
   StyleSheet,
 } from 'react-native';
-import AddNote from '../Screens/AddNote';
+// import AddNote from '../Screens/AddNote/AddNote';
 
 import { connect } from 'react-redux';
 import DeleteModal from '../components/DeleteModal';
@@ -93,7 +93,7 @@ class NotesList extends Component {
   render() {
     const { titleStyle, bodyStyle } = styles;
     return (
-      <SafeAreaView style={{ flex: 1 }}>
+      <View style={{ flex: 1 }}>
         {this.deleteModal()}
         <View>
           <Card>
@@ -149,7 +149,7 @@ class NotesList extends Component {
             </Card>
           )}
         />
-      </SafeAreaView>
+      </View>
     );
   }
   componentWillUnmount() {
